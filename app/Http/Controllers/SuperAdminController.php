@@ -255,26 +255,72 @@ public function deleteProductById($id){
     return Redirect::to('/view-products');
 }
 public function editProductById($id){
-    $productByIDInfo = DB::table('product')
+    $productInfo = DB::table('product')
     ->where('product_id',$id)
     ->first();
     $edit_product_page=view('admin.pages.product_edit_form')
-    ->with('product_info_by_id',$productByIDInfo);
+    ->with('productInfo',$productInfo);
     return view('admin.admin_master')
     ->with('admin_main_content',$edit_product_page);
 }
 public function updateProductData(Request $request){
+    $this->authCheck();
     $data=array();
-    $data['product_name']=$request->category_name;
-    $data['category_description']=$request->category_description;
-    $data['publication_status']=$request->publication_status;
-    $category_id=$request->category_id;
-    DB::table('category')
-    ->where('category_id',$category_id)
+    $data['category_id']=$request->category_id;
+    $data['manufacturer_id']=$request->manufacturer_id;
+    $data['product_sku']=$request->product_sku;
+    $data['product_name']=$request->product_name;
+    $data['product_purchase_price']=$request->product_purchase_price;
+    $data['product_retail_price']=$request->product_retail_price;
+    $data['product_quantity']=$request->product_quantity;
+    $data['product_brand_name']=$request->product_brand_name;
+    $data['product_short_description']=$request->product_short_description;
+    $data['product_long_description']=$request->product_long_description;
+    $data['product_publication_status']=$request->product_publication_status;
+    $data['product_featured_status']=0;
+    $product_id=$request->product_id;
+    $data['product_image']=$request->product_image;
+    
+    // echo'<pre>';
+    // print_r($_POST);
+    // print_r($_FILES);
+    // exit();
+    if($_FILES['product_image']['name']==''){
+        $data['product_image']=$request->product_image;
+        DB::table('product')
+    ->where('product_id',$product_id)
     ->update($data);
     Session::put('msg','Update Data Succesfully!!');
-    return Redirect::to('/view-category');
+    return Redirect::to('/view-products');
+    }else{
+
+   
+    /***************image****************************************************/
+    $files=$request->file('product_image');
+    $filename=$files->getClientOriginalName();
+    $extension=$files->getClientOriginalExtension();
+    $image=date('his').$filename;
+    $image_url='public/product_images/'.$image;
+    $destinationPath=base_path().'\public\product_images';
+    $sucess=$files->move($destinationPath,$image);
+
+    if ($sucess) {
+        $data['product_image']=$image_url;
+        DB::table('product')
+    ->where('product_id',$product_id)
+    ->update($data);
+    Session::put('msg','Update Data Succesfully!!');
+    //unlink($request->product_image);
+        return Redirect::to('/view-products');
+    }
+
+    else
+    {
+        $error=$files->getErrorMessage();
+    }
 }
+}
+
 
 
 /**

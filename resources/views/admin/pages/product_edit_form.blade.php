@@ -19,27 +19,30 @@
           <a href="javascript:;" class="icon-remove"></a>
         </span>
       </div>
+    
       <div class="widget-body">
         <!-- BEGIN FORM-->
-        {!! Form::open(array('url' => '/save-products','method'=>'post','enctype'=>'multipart/form-data')) !!}
+        {!! Form::open(array('url' => '/update-product','method'=>'post','enctype'=>'multipart/form-data', 'name'=>'edit_product')) !!}
         <div class="control-group">
           <div class="controls">
-            <input type="text" class="span6" name="product_sku" placeholder="SKU" />
-            <input type="text" class="span6" name="product_name" placeholder=" Product Title" />
+            <input type="text" class="span6" name="product_sku" value="{{$productInfo->product_sku}}" />
+            <input type="text" class="span6" name="product_name" value="{{$productInfo->product_name}}" />
+            <input type="hidden" class="span6" name="product_id" value="{{$productInfo->product_id}}" />
+            <input type="hidden" class="span6" name="product_image" value="{{$productInfo->product_image}}" />
           </div>
         </div>
         <div class="control-group">
           <label class="control-label">Purchase Price:</label>
           <div class="controls">
-            <input type="text" class="span4" name="product_purchase_price"placeholder="purchase Price"/>
-            <input type="text" class="span4" name="product_retail_price" placeholder="Retail Price" />
-            <input type="text" class="span4" name="product_quantity" placeholder="Qty" />
+            <input type="text" class="span4" name="product_purchase_price" value="{{$productInfo->product_purchase_price}}" />
+            <input type="text" class="span4" name="product_retail_price" value="{{$productInfo->product_retail_price}}"  />
+            <input type="text" class="span4" name="product_quantity" value="{{$productInfo->product_quantity}}"  />
           </div>
         </div>
         
         <div class="control-group">
           <div class="controls">
-            <input type="text" class="span8" name="product_brand_name" placeholder="Brand" />
+            <input type="text" class="span8" name="product_brand_name" value="{{$productInfo->product_brand_name}}"  />
           </div>
         </div>
 
@@ -68,7 +71,7 @@
         <div class="control-group">
           <label class="control-label">Short Description:</label>
           <div class="controls">
-            <textarea class="span8 " rows="3" name="product_short_description"></textarea>
+            <textarea class="span8 " rows="3" name="product_short_description">{{$productInfo->product_short_description}}</textarea>
           </div>
         </div>
       </div>
@@ -78,7 +81,7 @@
         <div class="control-group">
           <label class="control-label">Long Description:</label>
           <div class="controls">
-            <textarea class="span8 wysihtmleditor5" rows="5" name="product_long_description"></textarea>
+            <textarea class="span8 wysihtmleditor5" rows="5" name="product_long_description">{{$productInfo->product_long_description}}</textarea>
           </div>
         </div>
         <div class="control-group">
@@ -92,6 +95,7 @@
         </div>
         <div class="control-group">
           <label class="control-label">Image upload</label>
+          <span><img src="{{asset('/').$productInfo->product_image}}" alt="" height="100" width="100"/></span>
           <div class="controls">
             <div data-provides="fileupload" class="fileupload fileupload-new">
               <div class="input-append">
@@ -99,6 +103,7 @@
                   <i class="icon-file fileupload-exists"></i>
                   <span class="fileupload-preview"></span>
                 </div>
+                
                 <span class="btn btn-file">
                  <span class="fileupload-new">Select file</span>
                  <span class="fileupload-exists">Change</span>
@@ -112,7 +117,7 @@
 
        <div class="control-group">
         <div class="controls">
-         <button type="submit" class="btn btn-success">Submit</button>
+         <button type="submit" class="btn btn-success">Update</button>
          <button type="button" class="btn">Cancel</button>
        </div>
      </div>
@@ -123,4 +128,9 @@
 </div>
 <!-- END SAMPLE FORM PORTLET-->
 </div>
+<script type="text/javascript">
+document.forms['edit_product'].elements['category_id'].value="{{$productInfo->category_id}}";
+document.forms['edit_product'].elements['product_publication_status'].value="{{$productInfo->product_publication_status}}";
+document.forms['edit_product'].elements['manufacturer_id'].value="{{$productInfo->manufacturer_id}}"
+</script>
 @endsection
