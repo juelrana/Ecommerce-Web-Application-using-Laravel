@@ -129,13 +129,13 @@
 									<img src="{{asset('/').$vproduct->product_image}}" alt="" height="250"/>
 									<h2>${{ $vproduct->product_retail_price}}</h2>
 									<p>{{ $vproduct->product_name}}</p>
-									<a href="{{URL::to('/add-cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+									<a href="{{URL::to('/add-to-cart/'.$vproduct->product_id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
 								<div class="product-overlay">
 									<div class="overlay-content">
 										<h2>${{ $vproduct->product_retail_price}}</h2>
 										<p>{{ $vproduct->product_name}}</p>
-										<a href="{{URL::to('/add-cart')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="{{URL::to('/add-to-cart/'.$vproduct->product_id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
 								</div>
 							</div>

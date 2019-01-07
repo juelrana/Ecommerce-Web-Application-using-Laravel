@@ -122,89 +122,42 @@
                     </tr>
                 </thead>
                 <tbody>
+                        <?php $cartCollection = Cart::getContent(); ?>
+                        <?php  foreach ($cartCollection as $collection) {?>
                     <tr>
                         <td class="cart_product">
-                            <a href=""><img src="images/cart/one.png" alt=""></a>
+                                <a href=""><img src="{{asset('/').$collection['attributes']->image}}" alt="" width="100"></a>
                         </td>
                         <td class="cart_description">
-                            <h4><a href="">Colorblock Scuba</a></h4>
-                            <p>Web ID: 1089772</p>
+                            <h4><a href=""><p><?php  echo $collection->name; ?></p></a></h4>
+                            
                         </td>
                         <td class="cart_price">
-                            <p>$59</p>
+                                <p>$<?php  echo $collection->price; ?></p>
                         </td>
                         <td class="cart_quantity">
-                            <div class="cart_quantity_button">
-                                <a class="cart_quantity_up" href=""> + </a>
-                                <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                <a class="cart_quantity_down" href=""> - </a>
-                            </div>
-                        </td>
-                        <td class="cart_total">
-                            <p class="cart_total_price">$59</p>
-                        </td>
-                        <td class="cart_delete">
-                            <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                        </td>
+                                <div class="cart_quantity_button">
+                                    <a class="cart_quantity_up" href="{{URL::to('addition-to-cart/'.$collection->id)}}"> + </a>
+                                    <input class="cart_quantity_input" type="text" name="quantity" value="<?php  echo $collection->quantity; ?>" autocomplete="off" size="2">
+                                    <a class="cart_quantity_down" href="{{URL::to('substraction-from-cart/'.$collection->id)}}"> - </a>
+                                </div>
+                            </td>
+                            <td class="cart_total">
+                                    <p class="cart_total_price">$<?php  echo $collection->quantity*$collection->price; ?></p>
+                                </td>
+                                <td class="cart_delete">
+                                    <a class="cart_quantity_delete" href="{{URL::to('deletion-from-cart/'.$collection->id)}}"><i class="fa fa-times"></i></a>
+                                </td>
                     </tr>
-
-                    <tr>
-                        <td class="cart_product">
-                            <a href=""><img src="images/cart/two.png" alt=""></a>
-                        </td>
-                        <td class="cart_description">
-                            <h4><a href="">Colorblock Scuba</a></h4>
-                            <p>Web ID: 1089772</p>
-                        </td>
-                        <td class="cart_price">
-                            <p>$59</p>
-                        </td>
-                        <td class="cart_quantity">
-                            <div class="cart_quantity_button">
-                                <a class="cart_quantity_up" href=""> + </a>
-                                <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                <a class="cart_quantity_down" href=""> - </a>
-                            </div>
-                        </td>
-                        <td class="cart_total">
-                            <p class="cart_total_price">$59</p>
-                        </td>
-                        <td class="cart_delete">
-                            <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="cart_product">
-                            <a href=""><img src="images/cart/three.png" alt=""></a>
-                        </td>
-                        <td class="cart_description">
-                            <h4><a href="">Colorblock Scuba</a></h4>
-                            <p>Web ID: 1089772</p>
-                        </td>
-                        <td class="cart_price">
-                            <p>$59</p>
-                        </td>
-                        <td class="cart_quantity">
-                            <div class="cart_quantity_button">
-                                <a class="cart_quantity_up" href=""> + </a>
-                                <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                <a class="cart_quantity_down" href=""> - </a>
-                            </div>
-                        </td>
-                        <td class="cart_total">
-                            <p class="cart_total_price">$59</p>
-                        </td>
-                        <td class="cart_delete">
-                            <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                        </td>
-                    </tr>
+                    <?php }?>
+                  
                     <tr>
                         <td colspan="4">&nbsp;</td>
                         <td colspan="2">
                             <table class="table table-condensed total-result">
                                 <tr>
                                     <td>Cart Sub Total</td>
-                                    <td>$59</td>
+                                    <td>${{$subTotal = Cart::getSubTotal()}}</td>
                                 </tr>
                                 <tr>
                                     <td>Exo Tax</td>
@@ -216,7 +169,7 @@
                                 </tr>
                                 <tr>
                                     <td>Total</td>
-                                    <td><span>$61</span></td>
+                                    <td><span>${{$subTotal = Cart::getSubTotal()}}</span></td>
                                 </tr>
                             </table>
                         </td>

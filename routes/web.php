@@ -50,5 +50,10 @@ Route::get('/edit-product/{id}','SuperAdminController@editProductById');
 Route::post('/update-product','SuperAdminController@updateProductData');
 
 /********** Cart *********************************************************/
-Route::get('/add-cart','CartController@index');
+Route::get('/show-cart','CartController@ShowCart');
+Route::get('/add-to-cart/{id}','CartController@addToCart');
+Route::get('/addition-to-cart/{id}','CartController@additionToCart');
+Route::get('/substraction-from-cart/{id}','CartController@subtractionFromCart');
+Route::get('/deletion-from-cart/{id}','CartController@deletionFromCart');
+
 Route::get('/checkout','CartController@checkOut');
